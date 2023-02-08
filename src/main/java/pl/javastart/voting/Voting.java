@@ -9,26 +9,37 @@ public class Voting {
     public static void main(String[] args) {
         List<String> voters = new ArrayList<>();
 
-        // możesz dowolnie dodawać / usuwać dane testowe
         voters.add("Jan Kowalski");
-        voters.add("Zigniew Siobro");
-        voters.add("Zbyszek Stonoga");
+        voters.add("Zbigniew Siobro");
+        voters.add("Adam Nowak");
 
         Voting voting = new Voting();
 
         VotingResult votingResult = voting.executeVoting(voters, new Scanner(System.in));
         votingResult.printResults();
-        votingResult.printVoteForVoter("Zigniew Siobro");
+        votingResult.printVoteForVoter("Jan Kowalski");
+        votingResult.printVoteForVoter("Zbigniew Siobro");
+        votingResult.printVoteForVoter("Adam Nowak");
     }
 
-    /**
-     * Uzupełnij metodę metodę, ale nie zmieniaj jej sygnatury! (typu tego, co przyjmuje i zwraca).
-     * do wczytywania danych od użytkownika użyj scannera z parametru
-     * Metoda powinna pobrać głos dla każdego przekazanego głosującego i zapisać wyniki głosowania do VotingResult
-     */
     VotingResult executeVoting(List<String> voters, Scanner scanner) {
+        List<Vote> votingList = new ArrayList<>();
+        VotingResult votingResult = new VotingResult(votingList);
 
-        return null; // to możesz (a nawet powinieneś/powinnaś) zmienić :)
+        for (String voter : voters) {
+            System.out.println("Jak głosuje " + voter + "? (z - za, p - przeciw, w - wstrzymanie się)");
+            switch (scanner.nextLine()) {
+                case "z":
+                    votingList.add(new Vote(voter, Boolean.TRUE));
+                    break;
+                case "p":
+                    votingList.add(new Vote(voter, Boolean.FALSE));
+                    break;
+                default:
+                    votingList.add(new Vote(voter, null));
+                    break;
+            }
+        }
+        return votingResult;
     }
-
 }
