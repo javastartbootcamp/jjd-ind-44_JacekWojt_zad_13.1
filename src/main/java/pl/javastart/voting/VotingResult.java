@@ -30,17 +30,18 @@ public class VotingResult {
     public void printVoteForVoter(String voterName) {
         for (Vote vote : voteList) {
             if (voterName.equals(vote.getVoter())) {
-                try {
-                    boolean voteResult = vote.getVote();
-                    if (voteResult) {
+                if (null != vote.getVote()) {
+                    Boolean voteResult = vote.getVote();
+                    if (voteResult.equals(Boolean.TRUE)) {
                         System.out.println(voterName + ": ZA");
                     } else {
                         System.out.println(voterName + ": PRZECIW");
                     }
-                } catch (NullPointerException e) {
+                } else {
                     System.out.println(voterName + ": WSTRZYMAŁ SIĘ");
                 }
             }
         }
     }
 }
+
